@@ -70,26 +70,10 @@
 
 <script setup>
 import getStrapiMedia from '~~/composables/getStrapiMedia';
-
 const { data: globalData } = await useGetGlobal();
 const global = globalData.value.data.attributes;
 const { data: homepageData } = await useGetHomePage();
 const homepage = homepageData.value.data.attributes;
-const { seo } = homepage;
-const { defaultSeo, favIcon, siteName } = global;
-// Merge default and article-specific SEO data
-const fullSeo = {
-  ...defaultSeo,
-  ...seo,
-};
-useMeta({
-  title: `${fullSeo.metaTitle} | ${siteName}`,
-  meta: getMetaTags(fullSeo),
-  link: [
-    {
-      rel: "favicon",
-      href: getStrapiMedia(favIcon.data.attributes.url),
-    },
-  ],
-});
+useSEO(global, homepage);
+
 </script>
